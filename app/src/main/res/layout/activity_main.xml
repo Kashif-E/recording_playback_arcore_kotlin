@@ -14,95 +14,111 @@
    limitations under the License.
 -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
   </data>
 
-  <RelativeLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:context="com.google.ar.core.examples.kotlin.hellorecordingplayback.HelloRecordingPlaybackActivity">
 
     <android.opengl.GLSurfaceView
         android:id="@+id/surfaceview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="top" />
 
-    <LinearLayout
-        android:id="@+id/buttons_panel"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        android:baselineAligned="false">
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/surfaceview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <FrameLayout
+      <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:gravity="center">
+          android:orientation="vertical">
 
-        <Button
+        <ImageView
             android:id="@+id/start_recording_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:text="@string/start_recording_button_text"
-            android:textColor="@android:color/holo_green_light"
-            android:textSize="18sp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.988"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499"
+            app:srcCompat="@drawable/ic_stat_record" />
 
-        <Button
+        <ImageView
             android:id="@+id/stop_recording_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
             android:visibility="invisible"
-            android:textStyle="bold"
-            android:text="@string/stop_recording_button_text"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="18sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499"
+            app:srcCompat="@drawable/ic_stat_stop" />
 
-      </FrameLayout>
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:gravity="center">
-
-        <Button
+        <ImageView
             android:id="@+id/playback_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/playback_button_text"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:enabled="false" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="9dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/start_recording_button"
+            app:layout_constraintStart_toStartOf="@+id/start_recording_button"
+            app:layout_constraintTop_toBottomOf="@+id/start_recording_button"
+            app:srcCompat="@drawable/ic_stat_playback" />
 
-      </FrameLayout>
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/close_playback_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/start_recording_button"
+            app:layout_constraintStart_toStartOf="@+id/start_recording_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_stat_close" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/recording_playback_path"
+        android:id="@+id/recordingPlaybackPathTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:padding="10dp"
-        android:layout_below="@id/buttons_panel" />
-
-    <Button
-        android:id="@+id/close_playback_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
-        android:background="@android:color/transparent"
-        android:padding="10dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="TextView"
+        android:textColor="#4285F4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-  </RelativeLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

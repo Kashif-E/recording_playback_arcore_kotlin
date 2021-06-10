@@ -57,7 +57,6 @@ class HelloRecordingPlaybackActivity : AppCompatActivity(), GLSurfaceView.Render
     private val currentState = AtomicReference(AppState.IDLE)
     private var playbackDatasetPath: String? = null
     private var lastRecordingDatasetPath: String? = null
-    private var recordingPlaybackPathTextView: TextView? = null
     private var session: Session? = null
     private val messageSnackbarHelper = SnackbarHelper()
     private var displayRotationHelper: DisplayRotationHelper? = null
@@ -94,7 +93,7 @@ class HelloRecordingPlaybackActivity : AppCompatActivity(), GLSurfaceView.Render
         tapHelper = TapHelper(  this)
         setupSurfaceView()
         installRequested = false
-        recordingPlaybackPathTextView = findViewById(R.id.recording_playback_path)
+
 
         setupClickListeners()
         updateUI()
@@ -102,7 +101,7 @@ class HelloRecordingPlaybackActivity : AppCompatActivity(), GLSurfaceView.Render
 
     private fun setupClickListeners() {
         binding.startRecordingButton.setOnClickListener { startRecording() }
-        binding.startRecordingButton.setOnClickListener { stopRecording() }
+        binding.stopRecordingButton.setOnClickListener { stopRecording() }
         binding.playbackButton.setOnClickListener { startPlayback() }
         binding.closePlaybackButton.setOnClickListener { stopPlayback() }
     }
@@ -518,37 +517,37 @@ class HelloRecordingPlaybackActivity : AppCompatActivity(), GLSurfaceView.Render
             AppState.IDLE -> {
                 binding.startRecordingButton.visibility = View.VISIBLE
                 binding.startRecordingButton.isEnabled = true
-                binding.stopRecordingButton.visibility = View.GONE
+                binding.stopRecordingButton.visibility = View.INVISIBLE
                 binding.stopRecordingButton.isEnabled = false
                 binding.closePlaybackButton.visibility = View.INVISIBLE
                 binding.closePlaybackButton.isEnabled = false
                 binding.playbackButton.isEnabled = playbackDatasetPath != null
-                recordingPlaybackPathTextView!!.text = resources
+                binding.recordingPlaybackPathTextView!!.text = resources
                         .getString(
                                 R.string.playback_path_text,
                                 if (playbackDatasetPath == null) "" else playbackDatasetPath)
             }
             AppState.RECORDING -> {
-                binding.startRecordingButton.visibility = View.GONE
+                binding.startRecordingButton.visibility = View.INVISIBLE
                 binding.startRecordingButton.isEnabled = false
                 binding.stopRecordingButton.visibility = View.VISIBLE
                 binding.stopRecordingButton.isEnabled = true
                 binding.closePlaybackButton.visibility = View.INVISIBLE
                 binding.closePlaybackButton.isEnabled = false
                 binding.playbackButton.isEnabled = false
-                recordingPlaybackPathTextView!!.text = resources
+                binding.recordingPlaybackPathTextView!!.text = resources
                         .getString(
                                 R.string.recording_path_text,
                                 if (lastRecordingDatasetPath == null) "" else lastRecordingDatasetPath)
             }
             AppState.PLAYBACK -> {
 
-                recordingPlaybackPathTextView!!.text = ""
+                binding.recordingPlaybackPathTextView!!.text = ""
                 binding.startRecordingButton.visibility = View.INVISIBLE
                 binding.startRecordingButton.isEnabled = false
                 binding.stopRecordingButton.visibility = View.INVISIBLE
                 binding.stopRecordingButton.isEnabled = false
-                binding.closePlaybackButton.visibility = View.INVISIBLE
+                binding.playbackButton.visibility = View.INVISIBLE
                 binding.closePlaybackButton.isEnabled = true
                 binding.closePlaybackButton.visibility = View.VISIBLE
                 binding.playbackButton.isEnabled = false
